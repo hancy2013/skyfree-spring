@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="target" class="com.skyfree.before.NaiveWaiter"/>
+    <bean id="greetingAdvice" class="com.skyfree.before.GreetingBeforeAdvice"/>
+    
+    <!-- 
+        1. target: 代理的目标对象
+        2. proxyInterfaces,别名interfaces, 指定代理实现的接口,可以指定多个接口
+        3. interceptorNames: 指定advice,可以指定多个advice
+        4. singleton: 返回的代理对象是否为单例,默认为单例
+        5. optimize: 是否优化,true: 使用CGLIB, 特点创建慢,执行快; false:使用JDK代理,特点:创建快,执行慢
+        6. proxyTargetClass: true/false, true:使用CGLIB代理
+    -->
+    <bean id="waiter" class="org.springframework.aop.framework.ProxyFactoryBean"
+          p:proxyInterfaces="com.skyfree.before.Waiter"
+          p:interceptorNames="greetingAdvice"
+          p:target-ref="target" p:proxyTargetClass="true" p:optimize="true"/>
+</beans>
