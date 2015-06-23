@@ -1,5 +1,6 @@
 package com.skyfree.dao;
 
+import com.skyfree.model.ViewSpace;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;

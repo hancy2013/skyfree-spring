@@ -1,4 +1,4 @@
-package com.skyfree.dao;
+package com.skyfree.model;
 
 /**
  * Copyright @ 2015 OPS
