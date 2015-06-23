@@ -112,9 +112,9 @@ public class SpringTest extends AbstractTestNGSpringContextTests {
             System.out.println(vs.getId() + ":" + vs.getText());
         }
     }
-    
+
     @Test
-    public void getViewSpacesWithRowMapper(){
+    public void getViewSpacesWithRowMapper() {
         int id1 = viewSpaceDao.addViewSpace("A1");
         int id2 = viewSpaceDao.addViewSpace("A2");
 
@@ -147,18 +147,18 @@ public class SpringTest extends AbstractTestNGSpringContextTests {
             System.out.println(vs.getId() + ":" + vs.getText());
         }
     }
-    
+
     @Test
-    public void getViewSpaceCount(){
+    public void getViewSpaceCount() {
         int id1 = viewSpaceDao.addViewSpace("A1");
         int id2 = viewSpaceDao.addViewSpace("A2");
-        
+
         int count = viewSpaceDao.getViewSpaceCount();
         assertEquals(2, count);
     }
 
     @Test
-     public void getViewSpaceCountWithParams(){
+    public void getViewSpaceCountWithParams() {
         int id1 = viewSpaceDao.addViewSpace("A1");
         int id2 = viewSpaceDao.addViewSpace("A2");
 
@@ -167,7 +167,7 @@ public class SpringTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void getViewSpaceCountWithParamsAndTypes(){
+    public void getViewSpaceCountWithParamsAndTypes() {
         int id1 = viewSpaceDao.addViewSpace("A1");
         int id2 = viewSpaceDao.addViewSpace("A2");
 
@@ -175,8 +175,42 @@ public class SpringTest extends AbstractTestNGSpringContextTests {
         assertEquals(1, count);
     }
 
+    @Test
+    public void getViewSpaceCount1() {
+        int id1 = viewSpaceDao.addViewSpace("A1");
+        int count = viewSpaceDao.getViewSpaceCount1();
+        assertEquals(1, count);
+    }
+
+    @Test
+    public void getViewSpaceCount1WithParams() {
+        int id1 = viewSpaceDao.addViewSpace("A1");
+        int id2 = viewSpaceDao.addViewSpace("A2");
+
+        int count = viewSpaceDao.getViewSpaceCount1WithParams("A1");
+        assertEquals(1, count);
+    }
+
+    @Test
+    public void getViewSpaceCount1WithParamsAndTypes() {
+        int id1 = viewSpaceDao.addViewSpace("A1");
+        int id2 = viewSpaceDao.addViewSpace("A2");
+
+        int count = viewSpaceDao.getViewSpaceCount1WithParamsAndTypes("A1");
+        assertEquals(1, count);
+    }
+    
+    @Test
+    public void getViewSpace1() {
+        int id1 = viewSpaceDao.addViewSpace("A1");
+
+        ViewSpace vs = viewSpaceDao.getViewSpace1("A1");
+        assertEquals(id1, vs.getId());
+        assertEquals("A1", vs.getText());
+    }
+
     @AfterMethod
     public void tearDown() throws Exception {
-       viewSpaceDao.clearDB();
+        viewSpaceDao.clearDB();
     }
 }

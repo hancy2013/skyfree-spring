@@ -9,8 +9,6 @@ import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Predicate;
 
 /**
  * Copyright @ 2015 OPS
@@ -302,8 +300,9 @@ public class ViewSpaceDao {
 
         return vss;
     }
-    
-    // long类型的类似
+
+    // long类型的类似int
+    // 如果返回结果为空,抛出EmptyResultDataAccessException, 如果多于1行记录,抛出IncorrectResultSizeDataAccessException
     public int getViewSpaceCount() {
         return jdbcTemplate.queryForInt("SELECT COUNT(*) FROM t_test");
     }
@@ -315,6 +314,29 @@ public class ViewSpaceDao {
     public int getViewSpaceCountWithParamsAndTypes(String text) {
         return jdbcTemplate.queryForInt("SELECT COUNT(*) FROM t_test WHERE text = ?", new Object[]{text}, new int[]{Types.VARCHAR});
     }
-    
-    // queryForObject, 可以查询一下, 可以将一条记录转成一个对象, 主要是RowMapper接口
+
+    // queryForObject, 可以查询一下, 可以将一条记录转成一个对象, 主要是RowMapper接口    
+    public int getViewSpaceCount1() {
+        return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM t_test", Integer.class);
+    }
+
+    public int getViewSpaceCount1WithParams(String text) {
+        return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM t_test WHERE text=?", new Object[]{text}, Integer.class);
+    }
+
+    public int getViewSpaceCount1WithParamsAndTypes(String text) {
+        return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM t_test WHERE text=?", new Object[]{text}, new int[]{Types.VARCHAR}, Integer.class);
+    }
+
+    // 这已是最全参数的形式了,其他形式灵活应用
+    public ViewSpace getViewSpace1(String text) {
+        return jdbcTemplate.queryForObject("SELECT * FROM t_test WHERE text =?", new Object[]{text}, new RowMapper<ViewSpace>() {
+            public ViewSpace mapRow(ResultSet resultSet, int i) throws SQLException {
+                ViewSpace vs = new ViewSpace();
+                vs.setId(resultSet.getInt("id"));
+                vs.setText(resultSet.getString("text"));
+                return vs;
+            }
+        });
+    }
 }
