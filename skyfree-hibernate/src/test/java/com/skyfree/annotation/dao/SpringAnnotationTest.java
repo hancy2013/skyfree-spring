@@ -1,6 +1,7 @@
-package com.skyfree.dao;
+package com.skyfree.annotation.dao;
 
-import com.skyfree.model.ViewSpace;
+import com.skyfree.annotation.model.ViewSpace;
+import com.skyfree.annotation.dao.ViewSpaceHibernateDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.ContextConfiguration;
@@ -22,7 +23,7 @@ import static org.testng.Assert.assertNull;
  * DateTime: 15/6/24 11:32
  */
 @ContextConfiguration(locations = {"classpath:spring.xml"})
-public class SpringTest extends AbstractTestNGSpringContextTests {
+public class SpringAnnotationTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
     ViewSpaceHibernateDao viewSpaceHibernateDao;

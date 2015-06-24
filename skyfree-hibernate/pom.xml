@@ -70,7 +70,12 @@
             <groupId>net.sourceforge.cglib</groupId>
             <artifactId>com.springsource.net.sf.cglib</artifactId>
             <version>${cglib.version}</version>
-        </dependency>        
+        </dependency>
+        <dependency>
+            <groupId>javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.12.1.GA</version>
+        </dependency>
 
         <!-- 测试相关 -->
         <dependency>

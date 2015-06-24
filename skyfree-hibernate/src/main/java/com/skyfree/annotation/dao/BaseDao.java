@@ -1,4 +1,4 @@
-package com.skyfree.dao;
+package com.skyfree.annotation.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
  * Author: tingfang.bao <mantingfangabc@163.com>
  * DateTime: 15/6/24 11:11
  */
-@Repository(value = "base_dao")
 public class BaseDao {
     @Autowired
     private HibernateTemplate hibernateTemplate;
