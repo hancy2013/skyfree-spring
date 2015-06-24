@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+              http://www.springframework.org/schema/beans/spring-beans.xsd
+              http://www.springframework.org/schema/context
+              http://www.springframework.org/schema/context/spring-context.xsd
+              http://www.springframework.org/schema/tx
+              http://www.springframework.org/schema/tx/spring-tx.xsd
+              
+              ">
+    <context:component-scan base-package="com.skyfree.dao"/>
+
+    <context:property-placeholder location="jdbc.properties"/>
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close"
+          p:driverClassName="${jdbc.driverClass}"
+          p:url="${jdbc.url}"
+          p:username="${jdbc.username}"
+          p:password="${jdbc.password}"/>
+
+    <bean id="dataSource1" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+          destroy-method="close"
+          p:driverClass="${jdbc.driverClass}"
+          p:jdbcUrl="${jdbc.url}"
+          p:user="${jdbc.username}"
+          p:password="${jdbc.password}"
+          p:minPoolSize="5"
+          p:maxPoolSize="20"
+          p:acquireIncrement="5"
+          p:initialPoolSize="5"
+          p:maxIdleTime="240"/>
+
+    <!-- mappingLocations是最容易使用hbm.xml的一种方式 -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"
+          p:dataSource-ref="dataSource"
+          p:mappingLocations="classpath*:*.hbm.xml"
+          p:lobHandler-ref="lobHandler">
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">
+                    org.hibernate.dialect.PostgreSQLDialect
+                </prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <!-- 这个是用于学习目的,才设置hbm2ddl, 生产环境千万别这么做 -->
+                <prop key="hibernate.hbm2ddl.auto">create</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- 在dao中主要使用这个hibernateTemplate -->
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate"
+          p:sessionFactory-ref="sessionFactory"/>
+
+    <!-- 配置事务支持, 使用注解的事务支持,是最方便的-->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager"
+          p:sessionFactory-ref="sessionFactory"/>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!-- 支持lob -->
+    <bean id="lobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler" lazy-init="true"/>
+</beans>

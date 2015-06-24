@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-lazy="false">
+    <class name="com.skyfree.model.ViewSpace" table="t_viewspace">
+        <id name="id" column="id">
+            <!-- 这里使用pg,自增序列 如果是mysql,可以使用identity -->
+            <generator class="sequence-identity"/>
+        </id>
+        <property name="text" column="text"/>
+        <property name="description" column="description"
+                  type="org.springframework.orm.hibernate3.support.ClobStringType"/>
+        <property name="image" column="image" type="byte[]" />
+    </class>
+</hibernate-mapping>

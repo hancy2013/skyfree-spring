@@ -32,6 +32,7 @@
         <module>chapter1</module>
         <module>skyfree-aop</module>
         <module>skyfree-jdbc</module>
+        <module>skyfree-hibernate</module>
     </modules>
 
 
